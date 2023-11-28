@@ -1,10 +1,11 @@
 # Stremio Node 14.x
 # the node version for running Stremio Web
 ARG NODE_VERSION=15-alpine
+
 FROM node:$NODE_VERSION AS base
 
 # Meta
-LABEL Description="Stremio Web" Vendor="Smart Code OOD" Version="1.0.0"
+# LABEL Description="Stremio Web" Vendor="Smart Code OOD" Version="1.0.1"
 
 RUN mkdir -p /var/www/stremio-web
 WORKDIR /var/www/stremio-web
@@ -16,6 +17,7 @@ RUN apk update && apk upgrade && \
     apk add --no-cache git
 WORKDIR /var/www/stremio-web
 COPY . .
+# RUN npm cache clean --force
 RUN npm install
 RUN npm run build
 
@@ -24,8 +26,8 @@ FROM base AS final
 
 WORKDIR /var/www/stremio-web
 COPY . .
-COPY --from=prebuild /var/www/stremio-web/node_modules ./node_modules
-COPY --from=prebuild /var/www/stremio-web/build ./build
+COPY --from=prebuild /var/www/stremio-web/node_modules /var/www/stremio-web/node_modules
+COPY --from=prebuild /var/www/stremio-web/build /var/www/stremio-web/build
 
 EXPOSE 8080
-CMD ["node", "http_server.js"]
+CMD ["node", "http_server.js"] 

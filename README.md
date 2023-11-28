@@ -9,8 +9,8 @@ Stremio is a modern media center that's a one-stop solution for your video enter
 
 ### Prerequisites
 
-* Node.js 12 or higher
-* npm 6 or higher
+- Node.js 12 or higher
+- npm 6 or higher
 
 ### Install dependencies
 
@@ -47,3 +47,32 @@ npm run build
 ## License
 
 Stremio is copyright 2017-2023 Smart code and available under GPLv2 license. See the [LICENSE](/LICENSE.md) file in the project for more information.
+
+## Step
+
+https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw
+
+openssl genrsa -des3 -out rootCA.key 2048
+
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1825 -out rootCA.pem
+
+openssl genrsa -out app.stremio.local.key 2048
+
+openssl req -new -key app.stremio.local.key -out app.stremio.local.csr
+
+vi app.stremio.local.ext
+
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = app.stremio.local
+
+openssl x509 -req -in app.stremio.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial \
+-out app.stremio.local.crt -days 1825 -sha256 -extfile app.stremio.local.ext
+
+app.stremio.local.key: Private key
+app.stremio.local.csr: Certificate Signing Request
+app.stremio.local.crt: Signed certificate
