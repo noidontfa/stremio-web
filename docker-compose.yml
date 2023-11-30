@@ -12,9 +12,8 @@ services:
       - NO_CORS=1
 
   app:
-    build: .
-    # ports:
-    # - "9000:8080"
+    image: thinhntg/stremio-web-dual-subtitles:v1.0.0
+    restart: always
     expose:
       - 8080
     depends_on:

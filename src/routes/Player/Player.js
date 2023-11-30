@@ -263,25 +263,30 @@ const Player = ({ urlParams, queryParams }) => {
   const onSubtitlesTrackSelected = React.useCallback((id, subId = 1) => {
     dispatch({
       type: "setProp",
-      propName: "selectedSubtitlesTrackId",
+      propName:
+        subId === 1 ? "selectedSubtitlesTrackId" : "selectedSubtitles2TrackId",
       propValue: id,
     });
     dispatch({
       type: "setProp",
-      propName: "selectedExtraSubtitlesTrackId",
+      propName:
+        subId === 1
+          ? "selectedExtraSubtitlesTrackId"
+          : "selectedExtraSubtitles2TrackId",
       propValue: null,
     });
   }, []);
   const onExtraSubtitlesTrackSelected = React.useCallback((id, subId = 1) => {
     dispatch({
       type: "setProp",
-      propName: "selectedSubtitlesTrackId",
+      propName:
+        subId === 1 ? "selectedSubtitlesTrackId" : "selectedSubtitles2TrackId",
       propValue: null,
     });
     dispatch({
       type: "setProp",
       propName:
-        subId == 1
+        subId === 1
           ? "selectedExtraSubtitlesTrackId"
           : "selectedExtraSubtitles2TrackId",
       propValue: `${id};${subId}`,
@@ -1116,14 +1121,12 @@ const Player = ({ urlParams, queryParams }) => {
           audioTracks={videoState.audioTracks}
           selectedAudioTrackId={videoState.selectedAudioTrackId}
           subtitlesTracks={videoState.subtitlesTracks}
-          // selectedSubtitlesTrackId={videoState.selectedSubtitles2TrackId}
+          selectedSubtitlesTrackId={videoState.selectedSubtitles2TrackId}
           subtitlesOffset={videoState.subtitlesOffset}
           subtitlesSize={videoState.subtitlesSize}
           extraSubtitlesTracks={videoState.extraSubtitlesTracks}
           selectedExtraSubtitlesTrackId={
-            videoState.selectedExtraSubtitles2TrackId !== null
-              ? videoState.selectedExtraSubtitles2TrackId
-              : videoState.selectedExtraSubtitlesTrackId
+            videoState.selectedExtraSubtitles2TrackId
           }
           extraSubtitlesOffset={videoState.extraSubtitlesOffset}
           extraSubtitlesDelay={videoState.extraSubtitles2Delay}

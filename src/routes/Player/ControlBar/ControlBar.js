@@ -284,7 +284,7 @@ const ControlBar = ({
                 (!Array.isArray(audioTracks) || audioTracks.length === 0),
             })}
             tabIndex={-1}
-            onMouseDown={onSubtitlesButtonMouseDown}
+            // onMouseDown={onSubtitlesButtonMouseDown}
             onClick={onSubtitles2ButtonClick}
           >
             <Icon className={styles["icon"]} name={"subtitles"} />
